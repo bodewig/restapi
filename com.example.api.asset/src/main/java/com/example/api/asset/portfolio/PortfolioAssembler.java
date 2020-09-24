@@ -34,16 +34,15 @@ public class PortfolioAssembler {
 		return model;
 	}
 
-	public CollectionModel<RepresentationModel<?>> toCollectionModel(Iterable<? extends PortfolioEntity> theEntities) {
+	public PortfolioCollectionModel toCollectionModel(Iterable<? extends PortfolioEntity> theEntities) {
 		List<RepresentationModel<?>> portfolioModels = new ArrayList<>();
 		for (PortfolioEntity portfolioEntity : theEntities) {
 			portfolioModels.add(toModel(portfolioEntity));
 		}
 
-		Link selfRel = linkTo(methodOn(PortfolioController.class).getAll()).withSelfRel();
-		CollectionModel<RepresentationModel<?>> portfolios = CollectionModel.of(portfolioModels, selfRel);
-
-		return portfolios;
+		PortfolioCollectionModel model = new PortfolioCollectionModel(portfolioModels);
+		model.add(linkTo(methodOn(PortfolioController.class).getAll()).withSelfRel());
+		return model;
 	}
 
 	private IssuerEntity getIssuer(String theIssuerId) {

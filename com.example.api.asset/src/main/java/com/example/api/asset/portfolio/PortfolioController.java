@@ -24,10 +24,10 @@ public class PortfolioController {
 	private PortfolioDao portfolioDao = new PortfolioDao();
 
 	@GetMapping
-	HttpEntity<CollectionModel<RepresentationModel<?>>> getAll() {
+	HttpEntity<PortfolioCollectionModel> getAll() {
 		List<PortfolioEntity> entities = portfolioDao.getAll();
 
-		CollectionModel<RepresentationModel<?>> model = assembler.toCollectionModel(entities);
+		PortfolioCollectionModel model = assembler.toCollectionModel(entities);
 
 		return new ResponseEntity<>(model, HttpStatus.OK);
 	}
